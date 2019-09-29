@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     secondaryText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#f1c40f'
+        color: '#95a5a6'
     }
 });
 

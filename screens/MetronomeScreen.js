@@ -16,6 +16,7 @@ const TempoControl = () => {
             step={1}
             value='50'
             minimumTrackTintColor='#f1c40f'
+            maximumTrackTintColor='#2c3e50'
           />
         </View>
     </View>
@@ -23,11 +24,7 @@ const TempoControl = () => {
 }
 
 const AccentControl = () => {
-  const component1 = () => <Text style={styles.buttonText}>None</Text>
-  const component2 = () => <Text style={styles.buttonText}>Second</Text>
-  const component3 = () => <Text style={styles.buttonText}>Third</Text>
-  const component4 = () => <Text style={styles.buttonText}>Fourth</Text>
-  const options = [component1, component2, component3, component4];
+  const options = ['None', 'Second', 'Third', 'Fourth'];
   return (
     <View style={styles.controlContainer}>
       <Text style={styles.subTitle}> Accent </Text>
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'Avenir-Medium',
     color: '#34495e'
-},
+  },
   VisualMonitor: {
     alignItems: 'center',
     flexDirection: 'row'

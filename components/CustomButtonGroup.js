@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 export default function CustomButtonGroup({options}) {
-    const buttons = options.map(option => ({ element: option }));
+    const buttons = options.map(option => (<Text style={styles.buttonText}> { option } </Text> ));
     return (
             <View
             style={styles.container}
@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         borderRadius: 10
-    }
+    },
+    buttonText: {
+        fontSize: 15,
+        fontFamily: 'Avenir-Medium',
+        color: '#34495e'
+    },
 });
 
