@@ -36,20 +36,45 @@ const AccentControl = () => {
   )
 }
 
+const VisualMonitor = () => {
+  return (
+    <View style={styles.VisualMonitor}>
+        <Image
+          source={require('../assets/images/step_active.png')}
+          style={styles.MetronomeStep}
+          />
+        <Image
+          source={require('../assets/images/step_inactive.png')}
+          style={styles.MetronomeStep}
+          />
+        <Image
+          source={require('../assets/images/step_inactive.png')}
+          style={styles.MetronomeStep}
+          />
+        <Image
+          source={require('../assets/images/step_inactive.png')}
+          style={styles.MetronomeStep}
+          />
+    </View>
+  )
+}
+
 export default function MetronomeScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.bodyContainer}>
           <Image
-            source={require('../assets/images/metronome.png')}
+            source={require('../assets/images/metronome2.png')}
             style={styles.welcomeImage}
             />
         <Text style={styles.title}> Smart Metronome </Text>
       </View>
       <View style={styles.toolContainer}>
+        <VisualMonitor/>
         <TempoControl/>
         <AccentControl/>
-        <CustomButton text='Start' colorSet='secondary'/>
+        <CustomButton text='Tap Tempo' colorSet='secondaryLight'/>
+        <CustomButton text='Start' colorSet='primary'/>
         </View>
     </ScrollView>
   );
@@ -78,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#34495e',
     marginTop: 0,
-    height: 500,
+    height: 600,
     padding: 10, 
     alignItems: 'center'
   },
@@ -106,5 +131,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'Avenir-Medium',
     color: '#34495e'
-}
+},
+  VisualMonitor: {
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  MetronomeStep: {
+    height: 50,
+    width: 50
+  }
 });

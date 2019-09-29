@@ -2,18 +2,30 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
 export default function CustomButton({text, colorSet}) {
+    let getBttonStyle = () => {
+        switch (colorSet) {
+            case 'primary': 
+                return styles.primaryButton
+            case 'secondary': 
+                return styles.secondaryButton
+            case 'secondaryLight': 
+                return styles.secondaryLightButton
+            default:
+                return '';
+        }
+    }
     return (
             <TouchableOpacity
-            style={colorSet === 'primary' ? styles.primaryButton : styles.secondaryButton}
+            style={getBttonStyle()}
             onPress={this.onPress}
             >
-                <Text style={colorSet === 'primary' ? styles.text : styles.text}> { text } </Text>
+                <Text style={colorSet === 'primary' ? styles.primaryText : styles.secondaryText}> { text } </Text>
             </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    primaryButton: {
+    secondaryButton: {
         alignItems: 'center',
         backgroundColor: '#34495e',
         padding: 10,
@@ -22,7 +34,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10
     },
-    secondaryButton: {
+    primaryButton: {
         alignItems: 'center',
         backgroundColor: '#e74c3c',
         padding: 10,
@@ -31,7 +43,22 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10
     },
-    text: {
+    secondaryLightButton: {
+        alignItems: 'center',
+        backgroundColor: '#2c3e50',
+        padding: 10,
+        marginHorizontal: 80,
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 10,
+        color: 'blue'
+    },
+    primaryText: {
+        fontSize: 20,
+        fontFamily: 'Avenir-Medium',
+        color: '#f1c40f'
+    },
+    secondaryText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
         color: '#f1c40f'
