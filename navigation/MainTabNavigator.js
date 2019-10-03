@@ -10,7 +10,17 @@ import IntroScreen from '../screens/IntroScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
-  default: {},
+  default: {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#e67e22',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }
+  },
 });
 
 const IntroStack = createStackNavigator(
@@ -21,6 +31,7 @@ const IntroStack = createStackNavigator(
 )
 
 IntroStack.navigationOptions = {
+  title: 'Intro',
   tabBarLabel: 'Intro',
   tabBarIcon: ({focused}) => {
     <TabBarIcon
@@ -44,6 +55,7 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
+  title: 'Home',
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -67,6 +79,7 @@ const MetronomeStack = createStackNavigator(
 );
 
 MetronomeStack.navigationOptions = {
+  title: 'Metronome',
   tabBarLabel: 'Metronome',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />

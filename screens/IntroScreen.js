@@ -9,7 +9,8 @@ import {
 
 import CustomButton from '../components/CustomButton';
 
-export default function IntroScreen() {
+export default function IntroScreen(props) {
+    const { navigate } = props.navigation; 
     return (
         <View style={styles.container}>
             <View style={styles.welcomeContainer}>
@@ -21,9 +22,9 @@ export default function IntroScreen() {
                 <Text style={styles.subTitle}> The musician's toolkit. </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <CustomButton text='Smart Metronome' colorSet='primary' />
-                <CustomButton text='Chord Composer' colorSet='primary' />
-                <CustomButton text='About' colorSet='primary' />
+                <CustomButton text='Smart Metronome' colorSet='secondaryLight' onPress={() => navigate('Metronome')} />
+                <CustomButton text='Chord Composer' colorSet='secondaryLight' onPress={() => navigate('Metronome')} />
+                <CustomButton text='About' colorSet='secondaryLight' onPress={() => navigate('About')} />
             </View>
         </View>
     );

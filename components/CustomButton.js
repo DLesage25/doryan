@@ -1,28 +1,44 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-export default function CustomButton({text, colorSet}) {
+export default function CustomButton({text, colorSet, onPress}) {
+
+    const { buttonStyle, textStyle } = getStyles(colorSet); 
+
     return (
             <TouchableOpacity
-            style={colorSet === 'primary' ? styles.primaryButton : styles.secondaryButton}
-            onPress={this.onPress}
+            style={buttonStyle}
+            onPress={onPress}
             >
-                <Text style={colorSet === 'primary' ? styles.text : styles.text}> { text } </Text>
+                <Text style={textStyle}> { text } </Text>
             </TouchableOpacity>
     )
 }
 
+const getStyles = (colorSet) => {
+    switch (colorSet) {
+        case 'primary': 
+            return { buttonStyle: styles.primaryButton, textStyle: styles.primaryText }
+        case 'secondary': 
+            return { buttonStyle: styles.secondaryButton, textStyle: styles.secondaryText }
+        case 'secondaryLight': 
+            return { buttonStyle: styles.secondaryLightButton, textStyle: styles.secondaryLightText }
+        default:
+            return {};
+    }
+}
+
 const styles = StyleSheet.create({
-    primaryButton: {
+    secondaryButton: {
         alignItems: 'center',
-        backgroundColor: '#34495e',
+        backgroundColor: '#2c3e50',
         padding: 10,
         marginHorizontal: 80,
         marginTop: 10,
         marginBottom: 10,
         borderRadius: 10
     },
-    secondaryButton: {
+    primaryButton: {
         alignItems: 'center',
         backgroundColor: '#e74c3c',
         padding: 10,
@@ -31,7 +47,27 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10
     },
-    text: {
+    secondaryLightButton: {
+        alignItems: 'center',
+        backgroundColor: '#2c3e50',
+        padding: 10,
+        marginHorizontal: 80,
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 10,
+        color: 'blue'
+    },
+    primaryText: {
+        fontSize: 20,
+        fontFamily: 'Avenir-Medium',
+        color: '#f1c40f'
+    },
+    secondaryText: {
+        fontSize: 20,
+        fontFamily: 'Avenir-Medium',
+        color: '#95a5a6'
+    },
+    secondaryLightText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
         color: '#f1c40f'
