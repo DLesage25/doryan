@@ -1,34 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, View, Text, StyleSheet, Image, Slider } from 'react-native';
 
 import CustomButtonGroup from '../components/CustomButtonGroup';
 import CustomButton from '../components/CustomButton';
 
+import MetronomeStyles from '../styles/MetronomeStyles'
 
-const TempoControl = () => {
+import { changeAccent, changeTempo } from '../actions/metronomeActions';
+
+const TempoControl = ({tempo, changeTempo}) => {
   return (
     <View style={styles.controlContainer}>
       <Text style={styles.subTitle}> Tempo </Text>
-        <View style={styles.sliderContainer}>
+      <Text style={styles.smallLabel}> {tempo} </Text>
+      <View style={styles.sliderContainer}>
           <Slider 
             maximumValue='200'
             minimumValue='1'
             step={1}
-            value='50'
+            value={tempo}
             minimumTrackTintColor='#f1c40f'
             maximumTrackTintColor='#2c3e50'
+            onSlidingComplete={(newTempo) => {  changeTempo(newTempo) }}
           />
-        </View>
+      </View>
     </View>
   )
 }
 
-const AccentControl = () => {
-  const options = ['None', 'Second', 'Third', 'Fourth'];
+const AccentControl = ({accent, changeAccent}) => {
+  const options = ['First', 'Second', 'Third', 'Fourth'];
+  const { index } = accent;
   return (
     <View style={styles.controlContainer}>
       <Text style={styles.subTitle}> Accent </Text>
-      <CustomButtonGroup options={options} />
+      <CustomButtonGroup 
+        options={options} 
+        onPress={(selected) => { 
+          changeAccent({ index: selected, value: options[selected]}) 
+        }} 
+        selectedIndex={index}
+        />
   </View>
   )
 }
@@ -56,7 +69,9 @@ const VisualMonitor = () => {
   )
 }
 
-export default function MetronomeScreen() {
+const MetronomeScreen = (props) => {
+  const { changeAccent, changeTempo, metronome: { accent, tempo } } = props;
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.bodyContainer}>
@@ -65,76 +80,36 @@ export default function MetronomeScreen() {
             style={styles.welcomeImage}
             />
         <Text style={styles.title}> Smart Metronome </Text>
+                <VisualMonitor/>
       </View>
       <View style={styles.toolContainer}>
-        <VisualMonitor/>
-        <TempoControl/>
-        <AccentControl/>
-        <CustomButton text='Tap Tempo' colorSet='secondaryLight'/>
+        <TempoControl changeTempo={changeTempo} tempo={tempo} />
+        <AccentControl changeAccent={changeAccent} accent={accent} />
+        <CustomButton text='Tap Tempo' colorSet='secondary' onPress={()=> { props.changeAccent('test') }}/>
         <CustomButton text='Start' colorSet='primary'/>
         </View>
     </ScrollView>
   );
 }
 
+const mapStateToProps = state => {
+  const { metronome } = state;
+  return {
+    metronome
+  };
+}
+
+const mapDispatchToProps = dispatch => ({
+  changeAccent: newAccent => dispatch(changeAccent(newAccent)),
+  changeTempo: newTempo => dispatch(changeTempo(newTempo))
+})
+
 MetronomeScreen.navigationOptions = {
-  header: null,
+  //header: null,
+  title: 'Metronome',
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#f1c40f',
-  },
-  bodyContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  controlContainer: {
-    alignItems: 'center',
-    paddingTop: 20
-  },
-  toolContainer: {
-    flex: 1,
-    backgroundColor: '#34495e',
-    marginTop: 0,
-    height: 600,
-    padding: 10, 
-    alignItems: 'center'
-  },
-  sliderContainer: {
-    width: 300
-  },
-  title: {
-    fontSize: 30,
-    fontFamily: 'Avenir',
-    color: '#34495e'
-  },
-  subTitle: {
-    fontSize: 20,
-    fontFamily: 'Avenir-Medium',
-    color: '#f1c40f'
-  },
-  welcomeImage: {
-    width: 300,
-    height: 200,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  buttonText: {
-    fontSize: 15,
-    fontFamily: 'Avenir-Medium',
-    color: '#34495e'
-  },
-  VisualMonitor: {
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  MetronomeStep: {
-    height: 50,
-    width: 50
-  }
-});
+export default connect(mapStateToProps, mapDispatchToProps)(MetronomeScreen);
+
+
+const styles = StyleSheet.create(MetronomeStyles);

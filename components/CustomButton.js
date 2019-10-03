@@ -1,33 +1,37 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-export default function CustomButton({text, colorSet}) {
-    let getBttonStyle = () => {
-        switch (colorSet) {
-            case 'primary': 
-                return styles.primaryButton
-            case 'secondary': 
-                return styles.secondaryButton
-            case 'secondaryLight': 
-                return styles.secondaryLightButton
-            default:
-                return '';
-        }
-    }
+export default function CustomButton({text, colorSet, onPress}) {
+
+    const { buttonStyle, textStyle } = getStyles(colorSet); 
+
     return (
             <TouchableOpacity
-            style={getBttonStyle()}
-            onPress={this.onPress}
+            style={buttonStyle}
+            onPress={onPress}
             >
-                <Text style={colorSet === 'primary' ? styles.primaryText : styles.secondaryText}> { text } </Text>
+                <Text style={textStyle}> { text } </Text>
             </TouchableOpacity>
     )
+}
+
+const getStyles = (colorSet) => {
+    switch (colorSet) {
+        case 'primary': 
+            return { buttonStyle: styles.primaryButton, textStyle: styles.primaryText }
+        case 'secondary': 
+            return { buttonStyle: styles.secondaryButton, textStyle: styles.secondaryText }
+        case 'secondaryLight': 
+            return { buttonStyle: styles.secondaryLightButton, textStyle: styles.secondaryLightText }
+        default:
+            return {};
+    }
 }
 
 const styles = StyleSheet.create({
     secondaryButton: {
         alignItems: 'center',
-        backgroundColor: '#34495e',
+        backgroundColor: '#2c3e50',
         padding: 10,
         marginHorizontal: 80,
         marginTop: 10,
@@ -62,6 +66,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
         color: '#95a5a6'
+    },
+    secondaryLightText: {
+        fontSize: 20,
+        fontFamily: 'Avenir-Medium',
+        color: '#f1c40f'
     }
 });
 

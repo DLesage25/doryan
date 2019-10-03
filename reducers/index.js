@@ -1,22 +1,25 @@
 import { combineReducers } from 'redux';
 
 const INITIAL_STATE = {
-  current: [],
-  possible: [
-    'Allie',
-    'Gator',
-    'Lizzie',
-    'Reptar',
-  ],
+  accent: {
+    index: 0,
+    value: 'first'
+  },
+  tempo: 110,
+  play: false
 };
 
-const friendReducer = (state = INITIAL_STATE, action) => {
+const metronomeReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'CHANGE_ACCENT':
+      return { ...state, accent: action.payload }
+    case 'CHANGE_TEMPO':
+        return { ...state, tempo: action.payload }
     default:
       return state
   }
 };
 
 export default combineReducers({
-  friends: friendReducer,
+  metronome: metronomeReducer,
 });

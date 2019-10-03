@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
-export default function CustomButtonGroup({options}) {
+export default function CustomButtonGroup({options, onPress, selectedIndex}) {
     const buttons = options.map(option => (<Text style={styles.buttonText}> { option } </Text> ));
     return (
             <View
@@ -10,13 +10,14 @@ export default function CustomButtonGroup({options}) {
             >
                 <ButtonGroup
                     Component={TouchableOpacity}
-                    selectedIndex={0}
+                    selectedIndex={selectedIndex}
                     buttons={buttons}
                     containerStyle={{ borderWidth: 0, width: 350 }}
                     textStyle={{color: 'blue'}}
                     buttonStyle={{ backgroundColor: '#f1c40f' }}
                     selectedButtonStyle={{ backgroundColor: '#e67e22' }}
                     innerBorderStyle={{ color: '#34495e' }} 
+                    onPress={onPress}
                     />
             </View>
     )
