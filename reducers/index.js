@@ -14,7 +14,7 @@ const metronomeReducer = (state = INITIAL_STATE, action) => {
     case 'CHANGE_ACCENT':
       return { ...state, accent: action.payload }
     case 'CHANGE_TEMPO':
-        return { ...state, ...action.payload }
+        return { ...state, tempo: action.payload }
     default:
       return state
   }
