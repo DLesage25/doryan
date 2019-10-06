@@ -7,7 +7,14 @@ import { createLogger } from 'redux-logger';
 import reducers from './reducers';
 
 const logger = createLogger({
-    duration: true
+    duration: true,
+    titleFormatter: (action, time, took) => 
+        `REDUX AXN @ ${time} : ${action.type} in ${took.toFixed(2)} ms`,
+    colors: {
+        prevState: false,
+        nextState: false,
+        error: false
+    }
     // ...options
 });
 
