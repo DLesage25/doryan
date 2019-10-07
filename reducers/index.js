@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 const INITIAL_STATE = {
     accent: {
@@ -9,23 +9,23 @@ const INITIAL_STATE = {
     play: false,
     soundObjects: [],
     engine: false,
-}
+};
 
 const metronomeReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'CHANGE_ACCENT':
-            return { ...state, accent: action.payload }
+            return { ...state, accent: action.payload };
         case 'CHANGE_TEMPO':
-            return { ...state, tempo: action.payload }
+            return { ...state, tempo: action.payload };
         case 'LOAD_METRONOME_SOUNDS':
-            return { ...state, soundObjects: action.payload }
+            return { ...state, soundObjects: action.payload };
         case 'LOAD_METRONOME_ENGINE':
-            return { ...state, engine: action.payload }
+            return { ...state, engine: action.payload };
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default combineReducers({
     metronome: metronomeReducer,
-})
+});
