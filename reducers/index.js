@@ -7,7 +7,6 @@ const INITIAL_STATE = {
     },
     tempo: 110,
     play: false,
-    soundObjects: [],
     engine: false,
 };
 
@@ -17,8 +16,6 @@ const metronomeReducer = (state = INITIAL_STATE, action) => {
             return { ...state, accent: action.payload };
         case 'CHANGE_TEMPO':
             return { ...state, tempo: action.payload };
-        case 'LOAD_METRONOME_SOUNDS':
-            return { ...state, soundObjects: action.payload };
         case 'LOAD_METRONOME_ENGINE':
             return { ...state, engine: action.payload };
         default:

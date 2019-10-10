@@ -16,7 +16,6 @@ import MetronomeStyles from '../styles/MetronomeStyles';
 import {
     changeAccent,
     changeTempo,
-    getMetronomeSounds,
     loadMetronomeEngine,
 } from '../actions/metronomeActions';
 
@@ -89,18 +88,11 @@ class MetronomeScreen extends React.Component {
         };
     }
 
-    //load sound objects TODO - this maybe could happen together with
-    //loading the metronome engn
+    //load sound objects
     componentWillMount() {
-        if (!this.props.soundObjects.length) this.props.getMetronomeSounds();
-    }
-
-    //set up the metronome engine
-    componentDidMount() {
         if (!this.props.engine) this.props.loadMetronomeEngine();
     }
 
-    // const [metronomeStep, setMetronomeStep] = useState(0)
     render() {
         const {
             changeAccent,
@@ -139,7 +131,7 @@ class MetronomeScreen extends React.Component {
                         text="Start"
                         colorSet="primary"
                         onPress={() => {
-                            engine.start({ tempo });
+                            engine.start(tempo);
                         }}
                     />
                 </View>
@@ -150,12 +142,11 @@ class MetronomeScreen extends React.Component {
 
 const mapStateToProps = state => {
     const {
-        metronome: { accent, tempo, soundObjects, engine },
+        metronome: { accent, tempo, engine },
     } = state;
     return {
         accent,
         tempo,
-        soundObjects,
         engine,
     };
 };
@@ -163,7 +154,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     changeAccent: newAccent => dispatch(changeAccent(newAccent)),
     changeTempo: newTempo => dispatch(changeTempo(newTempo)),
-    getMetronomeSounds: e => dispatch(getMetronomeSounds(e)),
     loadMetronomeEngine: e => dispatch(loadMetronomeEngine(e)),
 });
 

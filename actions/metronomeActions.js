@@ -13,23 +13,19 @@ export function changeTempo(payload) {
     };
 }
 
-export function getMetronomeSounds() {
-    return async dispatch => {
-        const metronomeSounds = await loadMetronomeSounds();
-        return dispatch({
-            type: 'LOAD_METRONOME_SOUNDS',
-            payload: metronomeSounds,
-        });
-    };
-}
-
 export function loadMetronomeEngine() {
-    return async (dispatch, getState) => {
-        const soundObjects = getState().metronome.soundObjects;
+    return async dispatch => {
+        const soundObjects = await loadMetronomeSounds();
         const metronome = new metronomeEngine({
             soundObjects,
             onNoteSound: 'metronome_on_note',
             offNoteSound: 'metronome_off_note',
+            tickFunc: tickCount => {
+                console.log(`metronome tick #${tickCount}`);
+            },
+            endFunc: tickCount => {
+                console.log(`metronome ended after ${ticks}`);
+            },
         });
         return dispatch({
             type: 'LOAD_METRONOME_ENGINE',
