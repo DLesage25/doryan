@@ -104,6 +104,15 @@ class MetronomeScreen extends React.Component {
         } = this.props;
         const { metronomeStep } = this.state;
 
+        const metronomeOpts = {
+            tempo,
+            accent,
+            repeats: 10,
+            donef: () => {
+                alert('stop!');
+            }
+        }
+
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.bodyContainer}>
@@ -131,7 +140,7 @@ class MetronomeScreen extends React.Component {
                         text="Start"
                         colorSet="primary"
                         onPress={() => {
-                            engine.start(tempo);
+                            engine.start(metronomeOpts);
                         }}
                     />
                 </View>

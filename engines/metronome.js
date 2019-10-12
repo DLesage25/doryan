@@ -1,15 +1,17 @@
 export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     // derivative variables
-    let tickCount = 0; //I may need to move this into the scope of start()
+    let tickCount = 0;
     let timerId;
 
     const tick = (obj, repeats, sound) => {
-        tickCount += 1;
         if (sound) sound.replayAsync();
-        //by default, we just log each tick
-        tickFunc(tickCount);
+        if(tickFunc) tickFunc(tickCount);
+
+        tickCount += 1;
         if (tickCount >= repeats) {
             completeFunc(tickCount);
+            clearInterval(timerId);
+            timerId = false;
         }
     };
 
@@ -23,28 +25,27 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
             interval
         );
 
-        // once timeout is hit, stop
+        // TODO remove this once fully tested
+        // a metronome shouldnt stop ever :)
         setTimeout(() => {
             clearInterval(timerId);
             timerId = false;
-            alert('stop');
+            alert('stopped by timeout');
             return true;
         }, timeout);
     };
 
     return {
-        start: async (tempo, repeats, tickf, donef) => {
-            //TODO should this come from outside?
-            repeats = 30;
-
-            //easily reassing functions if needed upon starting metronome
+        start: async ({tempo, repeats, tickf, donef}) => {
+            //reassing functions if needed upon starting metronome
             if (tickf) tickFunc = tickf;
             if (donef) completeFunc = donef;
 
             //reset tickCount
             tickCount = 0;
 
-            const timeout = 10000; //TODO this should come from outside
+            //safety timeout in case something fails with tick()
+            const timeout = 2000000;
             return tickManager(tempo, timeout, repeats);
         },
     };
