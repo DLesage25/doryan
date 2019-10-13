@@ -19,7 +19,8 @@ import {
     loadMetronomeEngine,
 } from '../actions/metronomeActions';
 
-const TempoControl = ({ tempo, changeTempo }) => {
+const TempoControl = ({ tempo }) => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Tempo </Text>
@@ -33,7 +34,7 @@ const TempoControl = ({ tempo, changeTempo }) => {
                     minimumTrackTintColor="#f1c40f"
                     maximumTrackTintColor="#2c3e50"
                     onSlidingComplete={newTempo => {
-                        changeTempo(newTempo);
+                        dispatch({ type: 'CHANGE_TEMPO', payload: newTempo });
                     }}
                 />
             </View>
@@ -41,16 +42,23 @@ const TempoControl = ({ tempo, changeTempo }) => {
     );
 };
 
-const AccentControl = ({ accent, changeAccent }) => {
+const AccentControl = ({ accent }) => {
     const options = ['First', 'Second', 'Third', 'Fourth'];
     const { index } = accent;
+    const dispatch = useDispatch();
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Accent </Text>
             <CustomButtonGroup
                 options={options}
                 onPress={selected => {
-                    changeAccent({ index: selected, value: options[selected] });
+                    dispatch({
+                        type: 'CHANGE_ACCENT',
+                        payload: {
+                            index: selected,
+                            value: options[selected],
+                        },
+                    });
                 }}
                 selectedIndex={index}
             />
@@ -84,9 +92,10 @@ const MetronomeScreen = () => {
     const { accent, tempo, engine, soundObjects } = useSelector(
         state => state.metronome
     );
-    const dispatch = useDispatch();
 
     const [metronomeStep, setMetronomeStep] = useState(0);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!engine) dispatch(loadMetronomeEngine());
@@ -113,14 +122,8 @@ const MetronomeScreen = () => {
                 <VisualMonitor metronomeStep={metronomeStep} />
             </View>
             <View style={styles.toolContainer}>
-                <TempoControl
-                    changeTempo={dispatch(changeTempo)}
-                    tempo={tempo}
-                />
-                <AccentControl
-                    changeAccent={dispatch(changeAccent)}
-                    accent={accent}
-                />
+                <TempoControl tempo={tempo} />
+                <AccentControl accent={accent} />
                 <CustomButton
                     text="Tap Tempo"
                     colorSet="secondary"

@@ -8,9 +8,6 @@ export const PlayAudio = async soundURI => {
         //TODO - change this reference, assuming I may need formats other
         // than mp3 in the future
         let { isLoaded } = await sound_metronomeActive.getStatusAsync();
-
-        console.log({ isLoaded });
-
         if (!isLoaded) await sound_metronomeActive.loadAsync(MetronomeOnNote);
 
         await sound_metronomeActive.replayAsync(); //TODO when to use playAsync?
@@ -32,6 +29,7 @@ const LoadAudioFiles = async soundFiles => {
                 await soundObject.loadAsync(file);
                 let { isLoaded } = await soundObject.getStatusAsync();
                 if (isLoaded) soundObjects[name] = soundObject;
+                else console.error(`error loading soundobject ${name}`);
                 return true;
             })
         );

@@ -1,18 +1,6 @@
 import { loadMetronomeSounds } from '../engines/AudioDAO';
 import { metronomeEngine } from '../engines/metronome';
 
-export function changeAccent(payload) {
-    return dispatch => {
-        return dispatch({ type: 'CHANGE_ACCENT', payload });
-    };
-}
-
-export function changeTempo(payload) {
-    return dispatch => {
-        return dispatch({ type: 'CHANGE_TEMPO', payload });
-    };
-}
-
 export function loadMetronomeEngine() {
     return async dispatch => {
         const soundObjects = await loadMetronomeSounds();
