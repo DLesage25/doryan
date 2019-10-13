@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     ScrollView,
     View,
@@ -80,100 +80,69 @@ const VisualMonitor = ({ metronomeStep }) => {
     );
 };
 
-class MetronomeScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            metronomeStep: 0,
-        };
-    }
+const MetronomeScreen = () => {
+    const { accent, tempo, engine } = useSelector(state => state.metronome);
+    const dispatch = useDispatch();
 
-    //load sound objects
-    componentWillMount() {
-        if (!this.props.engine) this.props.loadMetronomeEngine();
-    }
+    const [metronomeStep, setMetronomeStep] = useState(0);
 
-    render() {
-        const {
-            changeAccent,
-            changeTempo,
-            accent,
-            tempo,
-            soundObjects,
-            engine,
-        } = this.props;
-        const { metronomeStep } = this.state;
+    useEffect(() => {
+        if (!engine) dispatch(loadMetronomeEngine());
+    }, []);
 
-        const metronomeOpts = {
-            tempo,
-            accent,
-            repeats: 10,
-            donef: () => {
-                alert('stop!');
-            }
-        }
-
-        return (
-            <ScrollView style={styles.container}>
-                <View style={styles.bodyContainer}>
-                    <Image
-                        source={require('../assets/images/metronome2.png')}
-                        style={styles.welcomeImage}
-                    />
-                    <Text style={styles.title}> Smart Metronome </Text>
-                    <VisualMonitor metronomeStep={metronomeStep} />
-                </View>
-                <View style={styles.toolContainer}>
-                    <TempoControl changeTempo={changeTempo} tempo={tempo} />
-                    <AccentControl
-                        changeAccent={changeAccent}
-                        accent={accent}
-                    />
-                    <CustomButton
-                        text="Tap Tempo"
-                        colorSet="secondary"
-                        onPress={() => {
-                            soundObjects.metronomeOnNote.replayAsync();
-                        }}
-                    />
-                    <CustomButton
-                        text="Start"
-                        colorSet="primary"
-                        onPress={() => {
-                            engine.start(metronomeOpts);
-                        }}
-                    />
-                </View>
-            </ScrollView>
-        );
-    }
-}
-
-const mapStateToProps = state => {
-    const {
-        metronome: { accent, tempo, engine },
-    } = state;
-    return {
-        accent,
+    const metronomeOpts = {
         tempo,
-        engine,
+        accent,
+        repeats: 10,
+        donef: () => {
+            alert('stop!');
+        },
+        setMetronomeStep,
     };
+
+    return (
+        <ScrollView style={styles.container}>
+            <View style={styles.bodyContainer}>
+                <Image
+                    source={require('../assets/images/metronome2.png')}
+                    style={styles.welcomeImage}
+                />
+                <Text style={styles.title}> Smart Metronome </Text>
+                <VisualMonitor metronomeStep={metronomeStep} />
+            </View>
+            <View style={styles.toolContainer}>
+                <TempoControl
+                    changeTempo={dispatch(changeTempo)}
+                    tempo={tempo}
+                />
+                <AccentControl
+                    changeAccent={dispatch(changeAccent)}
+                    accent={accent}
+                />
+                <CustomButton
+                    text="Tap Tempo"
+                    colorSet="secondary"
+                    onPress={() => {
+                        console.log('tap tempo');
+                    }}
+                />
+                <CustomButton
+                    text="Start"
+                    colorSet="primary"
+                    onPress={() => {
+                        engine.start(metronomeOpts);
+                    }}
+                />
+            </View>
+        </ScrollView>
+    );
 };
 
-const mapDispatchToProps = dispatch => ({
-    changeAccent: newAccent => dispatch(changeAccent(newAccent)),
-    changeTempo: newTempo => dispatch(changeTempo(newTempo)),
-    loadMetronomeEngine: e => dispatch(loadMetronomeEngine(e)),
-});
+const styles = StyleSheet.create(MetronomeStyles);
 
 MetronomeScreen.navigationOptions = {
     //header: null,
     title: 'Metronome',
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MetronomeScreen);
-
-const styles = StyleSheet.create(MetronomeStyles);
+export default MetronomeScreen;

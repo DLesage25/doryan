@@ -3,11 +3,18 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     let tickCount = 0;
     let timerId;
 
-    const tick = (obj, repeats, sound) => {
-        if (sound) sound.replayAsync();
-        if(tickFunc) tickFunc(tickCount);
+    const tick = ({ repeats, accent, setMetronomeStep }) => {
+        const isAccent = (tickCount / 4) % 1 === accent.index;
 
+        //TODO add dynamic metronome sound depending on accent
+        const soundOn = soundObjects.metronomeOnNote;
+        const soundOff = soundObjects.metronomeOffNote;
+
+        if (soundOn) soundOn.replayAsync();
+        if (tickFunc) tickFunc(tickCount);
         tickCount += 1;
+
+        setMetronomeStep;
         if (tickCount >= repeats) {
             completeFunc(tickCount);
             clearInterval(timerId);
@@ -15,15 +22,12 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
         }
     };
 
-    const tickManager = async (tempo, timeout, repeats) => {
+    const tickManager = async (config, timeout) => {
+        const { tempo } = config;
         //2 iterations per animation * 60000 ms per minute / tempo
         const interval = tempo ? 120000 / tempo / 2 : 1000;
 
-        //TODO add dynamic metronome sound depending on accent
-        timerId = setInterval(
-            () => tick(this, repeats, soundObjects.metronomeOnNote),
-            interval
-        );
+        timerId = setInterval(() => tick(config), interval);
 
         // TODO remove this once fully tested
         // a metronome shouldnt stop ever :)
@@ -36,7 +40,8 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     };
 
     return {
-        start: async ({tempo, repeats, tickf, donef}) => {
+        start: async config => {
+            const { tickf, donef } = config;
             //reassing functions if needed upon starting metronome
             if (tickf) tickFunc = tickf;
             if (donef) completeFunc = donef;
@@ -46,7 +51,7 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
 
             //safety timeout in case something fails with tick()
             const timeout = 2000000;
-            return tickManager(tempo, timeout, repeats);
+            return tickManager(config, timeout);
         },
     };
 };
