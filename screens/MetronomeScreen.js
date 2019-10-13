@@ -104,12 +104,15 @@ const MetronomeScreen = () => {
     const metronomeOpts = {
         tempo,
         accent,
-        repeats: 10,
+        repeats: 20,
         donef: () => {
-            alert('stop!');
+            console.log('stopped metronome');
         },
         setMetronomeStep,
     };
+
+    //TODO start button should become "stop when playing"
+    //TODO add stop action
 
     return (
         <ScrollView style={styles.container}>
@@ -132,6 +135,7 @@ const MetronomeScreen = () => {
                         console.log('tap tempo');
                     }}
                 />
+
                 <CustomButton
                     text="Start"
                     colorSet="primary"

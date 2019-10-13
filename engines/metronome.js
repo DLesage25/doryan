@@ -4,17 +4,21 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     let timerId;
 
     const tick = ({ repeats, accent, setMetronomeStep }) => {
-        const isAccent = (tickCount / 4) % 1 === accent.index;
+        const metronomeStep = (tickCount / 4) % 1;
+        const isAccent = metronomeStep === accent.index;
 
         //TODO add dynamic metronome sound depending on accent
         const soundOn = soundObjects.metronomeOnNote;
         const soundOff = soundObjects.metronomeOffNote;
 
-        if (soundOn) soundOn.replayAsync();
+        if (isAccent) soundOn.replayAsync();
+        else soundOff.replayAsync();
+
         if (tickFunc) tickFunc(tickCount);
         tickCount += 1;
 
-        setMetronomeStep;
+        //multiply by 4 to get round number again
+        setMetronomeStep(metronomeStep * 4);
         if (tickCount >= repeats) {
             completeFunc(tickCount);
             clearInterval(timerId);
