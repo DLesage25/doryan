@@ -28,7 +28,6 @@ const LoadAudioFiles = async soundFiles => {
         let soundObjects = {};
         await Promise.all(
             soundFiles.map(async ({ name, file }) => {
-                console.log({ name });
                 let soundObject = new Audio.Sound();
                 await soundObject.loadAsync(file);
                 let { isLoaded } = await soundObject.getStatusAsync();

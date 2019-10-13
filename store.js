@@ -8,7 +8,7 @@ import reducers from './reducers';
 
 // to prevent redux logger from logging
 // actions with deep nested objects
-const actionsToLogAsKeys = ['LOAD_METRONOME_SOUNDS'];
+const actionsToLogAsKeys = ['LOAD_METRONOME_ENGINE'];
 
 const logger = createLogger({
     duration: true,

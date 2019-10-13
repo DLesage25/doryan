@@ -81,7 +81,9 @@ const VisualMonitor = ({ metronomeStep }) => {
 };
 
 const MetronomeScreen = () => {
-    const { accent, tempo, engine } = useSelector(state => state.metronome);
+    const { accent, tempo, engine, soundObjects } = useSelector(
+        state => state.metronome
+    );
     const dispatch = useDispatch();
 
     const [metronomeStep, setMetronomeStep] = useState(0);
@@ -123,6 +125,7 @@ const MetronomeScreen = () => {
                     text="Tap Tempo"
                     colorSet="secondary"
                     onPress={() => {
+                        soundObjects.metronomeOnNote.replayAsync();
                         console.log('tap tempo');
                     }}
                 />

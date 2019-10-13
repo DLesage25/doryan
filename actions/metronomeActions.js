@@ -24,12 +24,12 @@ export function loadMetronomeEngine() {
                 console.log(`metronome tick #${tickCount}`);
             },
             endFunc: tickCount => {
-                console.log(`metronome ended after ${ticks}`);
+                console.log(`metronome ended after ${tickCount}`);
             },
         });
         return dispatch({
             type: 'LOAD_METRONOME_ENGINE',
-            payload: metronome,
+            payload: { metronome, soundObjects },
         });
     };
 }
