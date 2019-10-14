@@ -89,7 +89,7 @@ const VisualMonitor = ({ metronomeStep }) => {
 };
 
 const MetronomeScreen = () => {
-    const { accent, tempo, engine, soundObjects } = useSelector(
+    const { accent, tempo, engine, soundObjects, play } = useSelector(
         state => state.metronome
     );
 
@@ -109,6 +109,9 @@ const MetronomeScreen = () => {
             console.log('stopped metronome');
         },
         setMetronomeStep,
+        togglePlay: () => {
+            dispatch({ type: 'TOGGLE_PLAY' });
+        },
     };
 
     //TODO start button should become "stop when playing"
@@ -137,10 +140,10 @@ const MetronomeScreen = () => {
                 />
 
                 <CustomButton
-                    text="Start"
+                    text={play ? 'Stop' : 'Start'}
                     colorSet="primary"
                     onPress={() => {
-                        engine.start(metronomeOpts);
+                        play ? engine.stop() : engine.start(metronomeOpts);
                     }}
                 />
             </View>

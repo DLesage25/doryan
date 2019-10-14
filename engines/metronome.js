@@ -2,9 +2,10 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     // derivative variables
     let tickCount = 0;
     let timerId;
+    let toggleFunc;
 
     const tick = ({ repeats, accent, setMetronomeStep }) => {
-        const metronomeStep = (tickCount / 4) % 1;
+        const metronomeStep = ((tickCount / 4) % 1) * 4;
         const isAccent = metronomeStep === accent.index;
 
         //TODO add dynamic metronome sound depending on accent
@@ -18,7 +19,7 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
         tickCount += 1;
 
         //multiply by 4 to get round number again
-        setMetronomeStep(metronomeStep * 4);
+        setMetronomeStep(metronomeStep);
         if (tickCount >= repeats) {
             completeFunc(tickCount);
             clearInterval(timerId);
@@ -26,36 +27,32 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
         }
     };
 
-    const tickManager = async (config, timeout) => {
+    const tickManager = async config => {
         const { tempo } = config;
         //2 iterations per animation * 60000 ms per minute / tempo
         const interval = tempo ? 120000 / tempo / 2 : 1000;
 
         timerId = setInterval(() => tick(config), interval);
-
-        // TODO remove this once fully tested
-        // a metronome shouldnt stop ever :)
-        setTimeout(() => {
-            clearInterval(timerId);
-            timerId = false;
-            alert('stopped by timeout');
-            return true;
-        }, timeout);
     };
 
     return {
-        start: async config => {
-            const { tickf, donef } = config;
+        start: config => {
+            const { tickf, donef, togglePlay } = config;
             //reassing functions if needed upon starting metronome
             if (tickf) tickFunc = tickf;
             if (donef) completeFunc = donef;
+            if (togglePlay) toggleFunc = togglePlay;
 
             //reset tickCount
             tickCount = 0;
 
-            //safety timeout in case something fails with tick()
-            const timeout = 2000000;
-            return tickManager(config, timeout);
+            toggleFunc();
+            return tickManager(config);
+        },
+        stop: () => {
+            toggleFunc();
+            clearInterval(timerId);
+            timerId = false;
         },
     };
 };

@@ -16,6 +16,8 @@ const metronomeReducer = (state = INITIAL_STATE, action) => {
             return { ...state, accent: action.payload };
         case 'CHANGE_TEMPO':
             return { ...state, tempo: action.payload };
+        case 'TOGGLE_PLAY':
+            return { ...state, play: !state.play };
         case 'LOAD_METRONOME_ENGINE':
             return {
                 ...state,
