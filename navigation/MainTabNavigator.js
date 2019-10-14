@@ -22,6 +22,10 @@ const config = Platform.select({
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
+            tabBarOptions: {
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+            },
         },
     },
 });
@@ -36,7 +40,7 @@ const IntroStack = createStackNavigator(
 IntroStack.navigationOptions = {
     title: 'Intro',
     tabBarLabel: 'Intro',
-    tabBarIcon: ({ focused }) => {
+    tabBarIcon: ({ focused }) => (
         <TabBarIcon
             focused={focused}
             name={
@@ -44,8 +48,8 @@ IntroStack.navigationOptions = {
                     ? `ios-information-circle${focused ? '' : '-outline'}`
                     : 'md-information-circle'
             }
-        />;
-    },
+        />
+    ),
 };
 
 IntroStack.path = '';
@@ -88,6 +92,8 @@ MetronomeStack.navigationOptions = {
         <TabBarIcon
             focused={focused}
             name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+            tintColor={focused ? 'red' : 'blue'}
+            s
         />
     ),
 };
@@ -113,12 +119,26 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
-const tabNavigator = createBottomTabNavigator({
-    MetronomeStack,
-    IntroStack,
-    HomeStack,
-    SettingsStack,
-});
+const tabNavigator = createBottomTabNavigator(
+    {
+        MetronomeStack,
+        IntroStack,
+        //HomeStack,
+        SettingsStack,
+    },
+    {
+        tabBarOptions: {
+            activeTintColor: '#2c3e50',
+            inactiveTintColor: '#ecf0f1',
+            inactiveBackgroundColor: '#485460',
+            activeBackgroundColor: '#7f8c8d',
+            style: {
+                backgroundColor: '#485460',
+                borderTopColor: '#605F60',
+            },
+        },
+    }
+);
 
 tabNavigator.path = '';
 

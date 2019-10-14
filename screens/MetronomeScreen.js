@@ -13,11 +13,7 @@ import CustomButtonGroup from '../components/CustomButtonGroup';
 import CustomButton from '../components/CustomButton';
 import MetronomeStyles from '../styles/MetronomeStyles';
 
-import {
-    changeAccent,
-    changeTempo,
-    loadMetronomeEngine,
-} from '../actions/metronomeActions';
+import { loadMetronomeEngine } from '../actions/metronomeActions';
 
 const TempoControl = ({ tempo }) => {
     const dispatch = useDispatch();
@@ -113,9 +109,6 @@ const MetronomeScreen = () => {
             dispatch({ type: 'TOGGLE_PLAY' });
         },
     };
-
-    //TODO start button should become "stop when playing"
-    //TODO add stop action
 
     return (
         <ScrollView style={styles.container}>
