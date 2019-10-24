@@ -100,7 +100,7 @@ const MetronomeScreen = () => {
     const metronomeOpts = {
         tempo,
         accent,
-        repeats: 20,
+        repeats: 100,
         donef: () => {
             console.log('stopped metronome');
         },
