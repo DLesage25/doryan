@@ -1,32 +1,37 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-export default function CustomButton({text, colorSet, onPress}) {
-
-    const { buttonStyle, textStyle } = getStyles(colorSet); 
+export default function CustomButton({ text, colorSet, onPress }) {
+    const { buttonStyle, textStyle } = getStyles(colorSet);
 
     return (
-            <TouchableOpacity
-            style={buttonStyle}
-            onPress={onPress}
-            >
-                <Text style={textStyle}> { text } </Text>
-            </TouchableOpacity>
-    )
+        <TouchableOpacity style={buttonStyle} onPress={onPress}>
+            <Text style={textStyle}> {text} </Text>
+        </TouchableOpacity>
+    );
 }
 
-const getStyles = (colorSet) => {
+const getStyles = colorSet => {
     switch (colorSet) {
-        case 'primary': 
-            return { buttonStyle: styles.primaryButton, textStyle: styles.primaryText }
-        case 'secondary': 
-            return { buttonStyle: styles.secondaryButton, textStyle: styles.secondaryText }
-        case 'secondaryLight': 
-            return { buttonStyle: styles.secondaryLightButton, textStyle: styles.secondaryLightText }
+        case 'primary':
+            return {
+                buttonStyle: styles.primaryButton,
+                textStyle: styles.primaryText,
+            };
+        case 'secondary':
+            return {
+                buttonStyle: styles.secondaryButton,
+                textStyle: styles.secondaryText,
+            };
+        case 'secondaryLight':
+            return {
+                buttonStyle: styles.secondaryLightButton,
+                textStyle: styles.secondaryLightText,
+            };
         default:
             return {};
     }
-}
+};
 
 const styles = StyleSheet.create({
     secondaryButton: {
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 80,
         marginTop: 10,
         marginBottom: 10,
-        borderRadius: 10
+        borderRadius: 10,
     },
     primaryButton: {
         alignItems: 'center',
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 80,
         marginTop: 10,
         marginBottom: 10,
-        borderRadius: 10
+        borderRadius: 10,
     },
     secondaryLightButton: {
         alignItems: 'center',
@@ -55,22 +60,21 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         borderRadius: 10,
-        color: 'blue'
+        color: 'blue',
     },
     primaryText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#f1c40f'
+        color: '#f1c40f',
     },
     secondaryText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#95a5a6'
+        color: '#95a5a6',
     },
     secondaryLightText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#f1c40f'
-    }
+        color: '#f1c40f',
+    },
 });
-

@@ -1,43 +1,36 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     ScrollView,
     View,
     Text,
     StyleSheet,
     Image,
-    Slider
+    Slider,
 } from 'react-native';
 
 import CustomButtonGroup from '../components/CustomButtonGroup';
 import CustomButton from '../components/CustomButton';
 import MetronomeStyles from '../styles/MetronomeStyles';
 
-import { changeAccent, changeTempo } from '../actions/metronomeActions';
-import { PlayAudio } from '../components/AudioDAO';
-import { metronomeEngine } from '../engines/metronome';
+import { loadMetronomeEngine } from '../actions/metronomeActions';
 
-const metronome = new metronomeEngine({
-    playSound: PlayAudio,
-    onNoteSound: 'metronome_on_note',
-    offNoteSound: 'metronome_off_note'
-});
-
-const TempoControl = ({ tempo, changeTempo }) => {
+const TempoControl = ({ tempo }) => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Tempo </Text>
             <Text style={styles.smallLabel}> {tempo} </Text>
             <View style={styles.sliderContainer}>
                 <Slider
-                    maximumValue='200'
-                    minimumValue='1'
+                    maximumValue="200"
+                    minimumValue="1"
                     step={1}
                     value={tempo}
-                    minimumTrackTintColor='#f1c40f'
-                    maximumTrackTintColor='#2c3e50'
+                    minimumTrackTintColor="#f1c40f"
+                    maximumTrackTintColor="#2c3e50"
                     onSlidingComplete={newTempo => {
-                        changeTempo(newTempo);
+                        dispatch({ type: 'CHANGE_TEMPO', payload: newTempo });
                     }}
                 />
             </View>
@@ -45,16 +38,23 @@ const TempoControl = ({ tempo, changeTempo }) => {
     );
 };
 
-const AccentControl = ({ accent, changeAccent }) => {
+const AccentControl = ({ accent }) => {
     const options = ['First', 'Second', 'Third', 'Fourth'];
     const { index } = accent;
+    const dispatch = useDispatch();
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Accent </Text>
             <CustomButtonGroup
                 options={options}
                 onPress={selected => {
-                    changeAccent({ index: selected, value: options[selected] });
+                    dispatch({
+                        type: 'CHANGE_ACCENT',
+                        payload: {
+                            index: selected,
+                            value: options[selected],
+                        },
+                    });
                 }}
                 selectedIndex={index}
             />
@@ -84,13 +84,31 @@ const VisualMonitor = ({ metronomeStep }) => {
     );
 };
 
-const MetronomeScreen = props => {
-    const {
-        changeAccent,
-        changeTempo,
-        metronome: { accent, tempo }
-    } = props;
+const MetronomeScreen = () => {
+    const { accent, tempo, engine, soundObjects, play } = useSelector(
+        state => state.metronome
+    );
+
     const [metronomeStep, setMetronomeStep] = useState(0);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!engine) dispatch(loadMetronomeEngine());
+    }, []);
+
+    const metronomeOpts = {
+        tempo,
+        accent,
+        repeats: 100,
+        donef: () => {
+            console.log('stopped metronome');
+        },
+        setMetronomeStep,
+        togglePlay: () => {
+            dispatch({ type: 'TOGGLE_PLAY' });
+        },
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -103,20 +121,22 @@ const MetronomeScreen = props => {
                 <VisualMonitor metronomeStep={metronomeStep} />
             </View>
             <View style={styles.toolContainer}>
-                <TempoControl changeTempo={changeTempo} tempo={tempo} />
-                <AccentControl changeAccent={changeAccent} accent={accent} />
+                <TempoControl tempo={tempo} />
+                <AccentControl accent={accent} />
                 <CustomButton
-                    text='Tap Tempo'
-                    colorSet='secondary'
+                    text="Tap Tempo"
+                    colorSet="secondary"
                     onPress={() => {
-                        PlayAudio('metronome_on_note');
+                        soundObjects.metronomeOnNote.replayAsync();
+                        console.log('tap tempo');
                     }}
                 />
+
                 <CustomButton
-                    text='Start'
-                    colorSet='primary'
+                    text={play ? 'Stop' : 'Start'}
+                    colorSet="primary"
                     onPress={() => {
-                        metronome.start({tempo});
+                        play ? engine.stop() : engine.start(metronomeOpts);
                     }}
                 />
             </View>
@@ -124,26 +144,11 @@ const MetronomeScreen = props => {
     );
 };
 
-const mapStateToProps = state => {
-    const { metronome } = state;
-    return {
-        metronome
-    };
-};
-
-const mapDispatchToProps = dispatch => ({
-    changeAccent: newAccent => dispatch(changeAccent(newAccent)),
-    changeTempo: newTempo => dispatch(changeTempo(newTempo))
-});
+const styles = StyleSheet.create(MetronomeStyles);
 
 MetronomeScreen.navigationOptions = {
     //header: null,
-    title: 'Metronome'
+    title: 'Metronome',
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MetronomeScreen);
-
-const styles = StyleSheet.create(MetronomeStyles);
+export default MetronomeScreen;
