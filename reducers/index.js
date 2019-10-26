@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     tempo: 110,
     play: false,
     engine: false,
+    vibration: false,
 };
 
 const metronomeReducer = (state = INITIAL_STATE, action) => {
@@ -18,6 +19,8 @@ const metronomeReducer = (state = INITIAL_STATE, action) => {
             return { ...state, tempo: action.payload };
         case 'TOGGLE_PLAY':
             return { ...state, play: !state.play };
+        case 'TOGGLE_VIBRATION':
+            return { ...state, vibration: !state.vibration };
         case 'LOAD_METRONOME_ENGINE':
             return {
                 ...state,

@@ -63,12 +63,8 @@ const AccentControl = ({ accent }) => {
     );
 };
 
-const VibrationControl = ({ vibration, setVibration }) => {
-    /* 
-    TODO - change this to use useDispatch, 
-    just becuase thats how the other controls 
-    were made 
-    */
+const VibrationControl = ({ vibration }) => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Vibration </Text>
@@ -77,7 +73,9 @@ const VibrationControl = ({ vibration, setVibration }) => {
                 value={vibration}
                 trackColor={{ true: '#e67e22', false: 'grey' }}
                 onValueChange={() => {
-                    setVibration(!vibration);
+                    dispatch({
+                        type: 'TOGGLE_VIBRATION',
+                    });
                 }}
             />
         </View>
@@ -107,12 +105,16 @@ const VisualMonitor = ({ metronomeStep }) => {
 };
 
 const MetronomeScreen = () => {
-    const { accent, tempo, engine, soundObjects, play } = useSelector(
-        state => state.metronome
-    );
+    const {
+        accent,
+        tempo,
+        play,
+        vibration,
+        engine,
+        soundObjects,
+    } = useSelector(state => state.metronome);
 
     const [metronomeStep, setMetronomeStep] = useState(0);
-    const [vibration, setVibration] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -147,10 +149,7 @@ const MetronomeScreen = () => {
             <View style={styles.toolContainer}>
                 <TempoControl tempo={tempo} />
                 <AccentControl accent={accent} />
-                <VibrationControl
-                    vibration={vibration}
-                    setVibration={setVibration}
-                />
+                <VibrationControl vibration={vibration} />
                 <CustomButton
                     text="Tap Tempo"
                     colorSet="secondary"
