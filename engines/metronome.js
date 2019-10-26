@@ -6,7 +6,7 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     let timerId;
     let toggleFunc;
 
-    const tick = ({ repeats, accent, setMetronomeStep }) => {
+    const tick = ({ repeats, accent, vibration, setMetronomeStep }) => {
         const metronomeStep = ((tickCount / 4) % 1) * 4;
         const isAccent = metronomeStep === accent.index;
 
@@ -17,7 +17,8 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
         if (isAccent) soundOn.replayAsync();
         else soundOff.replayAsync();
 
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        if (vibration)
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         if (tickFunc) tickFunc(tickCount);
         tickCount += 1;

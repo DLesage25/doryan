@@ -7,6 +7,7 @@ import {
     StyleSheet,
     Image,
     Slider,
+    Switch,
 } from 'react-native';
 
 import CustomButtonGroup from '../components/CustomButtonGroup';
@@ -62,6 +63,26 @@ const AccentControl = ({ accent }) => {
     );
 };
 
+const VibrationControl = ({ vibration, setVibration }) => {
+    /* 
+    TODO - change this to use useDispatch, 
+    just becuase thats how the other controls 
+    were made 
+    */
+    return (
+        <View style={styles.controlContainer}>
+            <Text style={styles.subTitle}> Vibration </Text>
+            <Switch
+                style={styles.switch}
+                value={vibration}
+                onValueChange={() => {
+                    setVibration(!vibration);
+                }}
+            />
+        </View>
+    );
+};
+
 const VisualMonitor = ({ metronomeStep }) => {
     return (
         <View style={styles.VisualMonitor}>
@@ -90,6 +111,7 @@ const MetronomeScreen = () => {
     );
 
     const [metronomeStep, setMetronomeStep] = useState(0);
+    const [vibration, setVibration] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -100,6 +122,7 @@ const MetronomeScreen = () => {
     const metronomeOpts = {
         tempo,
         accent,
+        vibration,
         repeats: 100,
         donef: () => {
             console.log('stopped metronome');
@@ -117,12 +140,16 @@ const MetronomeScreen = () => {
                     source={require('../assets/images/metronome2.png')}
                     style={styles.welcomeImage}
                 />
-                <Text style={styles.title}> Smart Metronome </Text>
+                {/* <Text style={styles.title}> Smart Metronome </Text> */}
                 <VisualMonitor metronomeStep={metronomeStep} />
             </View>
             <View style={styles.toolContainer}>
                 <TempoControl tempo={tempo} />
                 <AccentControl accent={accent} />
+                <VibrationControl
+                    vibration={vibration}
+                    setVibration={setVibration}
+                />
                 <CustomButton
                     text="Tap Tempo"
                     colorSet="secondary"
@@ -131,7 +158,6 @@ const MetronomeScreen = () => {
                         console.log('tap tempo');
                     }}
                 />
-
                 <CustomButton
                     text={play ? 'Stop' : 'Start'}
                     colorSet="primary"
