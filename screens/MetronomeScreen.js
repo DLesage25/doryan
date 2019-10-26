@@ -75,6 +75,7 @@ const VibrationControl = ({ vibration, setVibration }) => {
             <Switch
                 style={styles.switch}
                 value={vibration}
+                trackColor={{ true: '#e67e22', false: 'grey' }}
                 onValueChange={() => {
                     setVibration(!vibration);
                 }}
