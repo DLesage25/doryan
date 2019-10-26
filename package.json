@@ -33,7 +33,8 @@
         "redux": "^4.0.4",
         "redux-promise": "^0.6.0",
         "redux-promise-middleware": "^6.1.1",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "expo-haptics": "~7.0.0"
     },
     "devDependencies": {
         "babel-preset-expo": "^7.0.0",

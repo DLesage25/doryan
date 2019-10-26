@@ -1,3 +1,5 @@
+import * as Haptics from 'expo-haptics';
+
 export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     // derivative variables
     let tickCount = 0;
@@ -14,6 +16,8 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
 
         if (isAccent) soundOn.replayAsync();
         else soundOff.replayAsync();
+
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         if (tickFunc) tickFunc(tickCount);
         tickCount += 1;
