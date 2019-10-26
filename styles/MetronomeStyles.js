@@ -13,12 +13,11 @@ export default {
         marginHorizontal: 10,
     },
     toolContainer: {
-        flex: 1,
         backgroundColor: '#34495e',
         marginTop: 0,
         height: 600,
-        padding: 10,
         alignItems: 'center',
+        marginBottom: 0,
     },
     feedbackControl: {
         justifyContent: 'space-evenly',
@@ -64,7 +63,7 @@ export default {
         flexDirection: 'row',
     },
     MetronomeStep: {
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
     },
 };
