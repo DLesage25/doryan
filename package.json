@@ -21,6 +21,8 @@
         "expo-av": "^7.0.1",
         "expo-constants": "^7.0.0",
         "expo-font": "^7.0.0",
+        "expo-haptics": "~7.0.0",
+        "expo-permissions": "~7.0.0",
         "expo-web-browser": "^7.0.0",
         "react": "16.8.3",
         "react-dom": "16.8.3",
@@ -33,12 +35,12 @@
         "redux": "^4.0.4",
         "redux-promise": "^0.6.0",
         "redux-promise-middleware": "^6.1.1",
-        "redux-thunk": "^2.3.0",
-        "expo-haptics": "~7.0.0",
-        "expo-permissions": "~7.0.0"
+        "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
         "babel-preset-expo": "^7.0.0",
+        "eslint": "^6.6.0",
+        "eslint-plugin-react": "^7.16.0",
         "jest-expo": "^35.0.0",
         "prettier": "^1.18.2",
         "redux-logger": "^3.0.6"

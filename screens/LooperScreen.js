@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     ScrollView,
     View,
@@ -10,26 +11,31 @@ import {
 import CustomButton from '../components/CustomButton';
 import CustomButtonGroup from '../components/CustomButtonGroup';
 
+import { recordSound } from '../engines/recording';
+
 import LooperStyles from '../styles/LooperStyles';
 
 const LoopLengthControl = () => {
-    const options = ['5s', '10s', '15s'];
+    const { loopLength } = useSelector(({ looper }) => looper);
+    // const options = ['5s', '10s', '15s'];
+    const options = { '5s': 5000, '10s': 10000, '15s': 15000 };
+    const dispatch = useDispatch();
 
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Loop length </Text>
             <CustomButtonGroup
-                options={options}
+                options={Object.keys(options)}
                 onPress={selected => {
                     dispatch({
-                        type: 'CHANGE_ACCENT',
+                        type: 'CHANGE_LOOP_LENGTH',
                         payload: {
                             index: selected,
-                            value: options[selected],
+                            value: Object.values(options)[selected],
                         },
                     });
                 }}
-                selectedIndex={0}
+                selectedIndex={loopLength.index}
             />
         </View>
     );
@@ -42,14 +48,14 @@ const LooperButtons = () => {
                 text={'Play All'}
                 colorSet="primary"
                 onPress={() => {
-                    console.log('loop');
+                    console.log('play all');
                 }}
             />
             <CustomButton
                 text={'Rec/Dub'}
                 colorSet="primary"
-                onPress={() => {
-                    console.log('loop');
+                onPress={async () => {
+                    await recordSound();
                 }}
             />
         </View>
@@ -62,7 +68,6 @@ const IndividualLoopControl = () => {
             <Text style={styles.subTitle}> Loop 1 </Text>
             <View style={styles.individualLoopControls}>
                 <View>
-                    {/* <Text style={styles.subTitle}> Volume </Text> */}
                     <View style={styles.sliderContainer}>
                         <Slider
                             maximumValue="10"
@@ -81,7 +86,6 @@ const IndividualLoopControl = () => {
                     </View>
                 </View>
                 <View style={styles.centeredRow}>
-                    {/* <Text style={styles.subTitle}> Audio </Text> */}
                     <CustomButton
                         text={'Play'}
                         colorSet="secondary"
@@ -103,6 +107,8 @@ const IndividualLoopControl = () => {
 };
 
 const LooperScreen = () => {
+    const { play, loops, recording } = useSelector(({ looper }) => looper);
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>

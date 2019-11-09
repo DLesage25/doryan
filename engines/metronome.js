@@ -10,7 +10,7 @@ export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
         const metronomeStep = ((tickCount / 4) % 1) * 4;
         const isAccent = metronomeStep === accent.index;
 
-        //TODO add dynamic metronome sound depending on accent
+        //TODO add feature for exchanging metronome sounds
         const soundOn = soundObjects.metronomeOnNote;
         const soundOff = soundObjects.metronomeOffNote;
 
