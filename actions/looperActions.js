@@ -1,8 +1,8 @@
 import { recordSoundWithTimeout } from '../engines/recording';
 
-export const recordNewSound = () => {
+export const recordNewSound = loopLength => {
     return async dispatch => {
-        let newSound = await recordSoundWithTimeout();
+        let newSound = await recordSoundWithTimeout(loopLength);
         dispatch({
             type: 'RECORD_NEW_SOUND',
             payload: {

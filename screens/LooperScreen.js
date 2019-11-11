@@ -43,6 +43,7 @@ const LoopLengthControl = () => {
 
 const LooperButtons = () => {
     const dispatch = useDispatch();
+    const { loopLength } = useSelector(({ looper }) => looper);
     return (
         <View style={styles.centeredFlex}>
             <CustomButton
@@ -56,7 +57,7 @@ const LooperButtons = () => {
                 text={'Rec/Dub'}
                 colorSet="primary"
                 onPress={async () => {
-                    dispatch(recordNewSound());
+                    dispatch(recordNewSound(loopLength));
                 }}
             />
         </View>
@@ -64,52 +65,59 @@ const LooperButtons = () => {
 };
 
 const IndividualLoopControl = () => {
+    const { loops } = useSelector(({ looper }) => looper);
     return (
-        <View style={styles.controlContainer}>
-            <Text style={styles.subTitle}> Loop 1 </Text>
-            <View style={styles.individualLoopControls}>
-                <View>
-                    <View style={styles.sliderContainer}>
-                        <Slider
-                            maximumValue="10"
-                            minimumValue="1"
-                            step={1}
-                            value={5}
-                            minimumTrackTintColor="#f1c40f"
-                            maximumTrackTintColor="#2c3e50"
-                            onSlidingComplete={newTempo => {
-                                dispatch({
-                                    type: 'CHANGE_TEMPO',
-                                    payload: newTempo,
-                                });
-                            }}
-                        />
-                    </View>
-                </View>
-                <View style={styles.centeredRow}>
-                    <CustomButton
-                        text={'Play'}
-                        colorSet="secondary"
-                        onPress={() => {
-                            console.log('loop');
-                        }}
-                    />
-                    <CustomButton
-                        text={'Delete'}
-                        colorSet="secondary"
-                        onPress={() => {
-                            console.log('loop');
-                        }}
-                    />
-                </View>
-            </View>
-        </View>
+        <>
+            {!loops.length
+                ? null
+                : loops.map(({ id, sound }, index) => (
+                      <View style={styles.controlContainer} key={`loop-${id}`}>
+                          <Text style={styles.subTitle}>Loop {index + 1}</Text>
+                          <View style={styles.individualLoopControls}>
+                              <View>
+                                  <View style={styles.sliderContainer}>
+                                      <Slider
+                                          maximumValue="10"
+                                          minimumValue="1"
+                                          step={1}
+                                          value={5}
+                                          minimumTrackTintColor="#f1c40f"
+                                          maximumTrackTintColor="#2c3e50"
+                                          onSlidingComplete={async newVolume => {
+                                              await sound.setVolumeAsync(
+                                                  newVolume / 10
+                                              );
+                                          }}
+                                      />
+                                  </View>
+                              </View>
+                              <View style={styles.centeredRow}>
+                                  <CustomButton
+                                      text={'Play'}
+                                      colorSet="secondary"
+                                      onPress={async () => {
+                                          await sound.replayAsync();
+                                          await sound.setIsLoopingAsync(true);
+                                          console.log('play');
+                                      }}
+                                  />
+                                  <CustomButton
+                                      text={'Delete'}
+                                      colorSet="secondary"
+                                      onPress={async () => {
+                                          await sound.setIsLoopingAsync(false);
+                                          console.log('stop');
+                                      }}
+                                  />
+                              </View>
+                          </View>
+                      </View>
+                  ))}
+        </>
     );
 };
 
 const LooperScreen = () => {
-    const { play, loops, recording } = useSelector(({ looper }) => looper);
-
     return (
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>
