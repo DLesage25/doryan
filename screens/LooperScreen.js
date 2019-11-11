@@ -11,7 +11,7 @@ import {
 import CustomButton from '../components/CustomButton';
 import CustomButtonGroup from '../components/CustomButtonGroup';
 
-import { recordSound } from '../engines/recording';
+import { recordNewSound } from '../actions/looperActions';
 
 import LooperStyles from '../styles/LooperStyles';
 
@@ -42,6 +42,7 @@ const LoopLengthControl = () => {
 };
 
 const LooperButtons = () => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.centeredFlex}>
             <CustomButton
@@ -55,7 +56,7 @@ const LooperButtons = () => {
                 text={'Rec/Dub'}
                 colorSet="primary"
                 onPress={async () => {
-                    await recordSound();
+                    dispatch(recordNewSound());
                 }}
             />
         </View>

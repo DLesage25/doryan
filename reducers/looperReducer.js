@@ -14,6 +14,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, play: !state.play };
         case 'CHANGE_LOOP_LENGTH':
             return { ...state, loopLength: action.payload };
+        case 'RECORD_NEW_SOUND':
+            return { ...state, loops: state.loops.concat([action.payload]) };
         default:
             return state;
     }

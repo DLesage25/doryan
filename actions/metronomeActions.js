@@ -1,7 +1,7 @@
 import { loadMetronomeSounds } from '../engines/AudioDAO';
 import { metronomeEngine } from '../engines/metronome';
 
-export function loadMetronomeEngine() {
+export const loadMetronomeEngine = () => {
     return async dispatch => {
         const soundObjects = await loadMetronomeSounds();
         const metronome = new metronomeEngine({
@@ -20,4 +20,4 @@ export function loadMetronomeEngine() {
             payload: { metronome, soundObjects },
         });
     };
-}
+};
