@@ -43,23 +43,27 @@ const LoopLengthControl = () => {
 
 const LooperButtons = () => {
     const dispatch = useDispatch();
-    const { loopLength } = useSelector(({ looper }) => looper);
+    const { loopLength, loops } = useSelector(({ looper }) => looper);
     return (
-        <View style={styles.centeredFlex}>
-            <CustomButton
-                text={'Play All'}
-                colorSet="primary"
-                onPress={() => {
-                    console.log('play all');
-                }}
-            />
-            <CustomButton
-                text={'Rec/Dub'}
-                colorSet="primary"
-                onPress={async () => {
-                    dispatch(recordNewSound(loopLength));
-                }}
-            />
+        <View style={styles.looperButtons}>
+            {!loops.length ? null : (
+                <CustomButton
+                    text={'Play All'}
+                    colorSet="primary"
+                    onPress={() => {
+                        console.log('play all');
+                    }}
+                />
+            )}
+            <View style={styles.mainButtonContainer}>
+                <CustomButton
+                    text={'Rec/Dub'}
+                    colorSet="primary"
+                    onPress={async () => {
+                        dispatch(recordNewSound(loopLength));
+                    }}
+                />
+            </View>
         </View>
     );
 };

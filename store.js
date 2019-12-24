@@ -22,7 +22,9 @@ const logger = createLogger({
                 ...state,
                 metronome: {
                     ...state.metronome,
-                    soundObjects: Object.keys(state.metronome.soundObjects),
+                    soundObjects:
+                        Object.keys(state.metronome.soundObjects) +
+                        ' [reduced - object]',
                 },
             };
         }
@@ -31,7 +33,7 @@ const logger = createLogger({
                 ...state,
                 looper: {
                     ...state.looper,
-                    loops: state.looper.loops.length,
+                    loops: state.looper.loops.length + ' [reduced - array]',
                 },
             };
         }

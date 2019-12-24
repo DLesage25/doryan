@@ -13,6 +13,7 @@ export default {
         height: 1000,
         alignItems: 'center',
         marginBottom: 0,
+        flexDirection: 'column',
     },
     controlContainer: {
         alignItems: 'center',
@@ -54,5 +55,15 @@ export default {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    looperButtons: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        alignItems: 'flex-end',
+        // alignSelf: 'flex-end',
+    },
+    mainButtonContainer: {
+        alignSelf: 'flex-end',
     },
 };
