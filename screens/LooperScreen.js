@@ -73,11 +73,12 @@ const LooperButtons = () => {
 
 const IndividualLoopControl = () => {
     const { loops } = useSelector(({ looper }) => looper);
+    const dispatch = useDispatch();
     return (
         <>
             {!loops.length
                 ? null
-                : loops.map(({ id, sound }, index) => (
+                : loops.map(({ id, sound, playing }, index) => (
                       <View style={styles.controlContainer} key={`loop-${id}`}>
                           <Text style={styles.subTitle}>Loop {index + 1}</Text>
                           <View style={styles.individualLoopControls}>
@@ -100,20 +101,49 @@ const IndividualLoopControl = () => {
                               </View>
                               <View style={styles.centeredRow}>
                                   <CustomButton
-                                      text={'Play'}
+                                      text={playing ? 'Stop' : 'Play'}
                                       colorSet="secondary"
                                       onPress={async () => {
-                                          await sound.replayAsync();
-                                          await sound.setIsLoopingAsync(true);
-                                          console.log('play');
+                                          if (playing) {
+                                              await sound.stopAsync();
+                                              await sound.setIsLoopingAsync(
+                                                  false
+                                              );
+                                          } else {
+                                              await sound.replayAsync();
+                                              await sound.setIsLoopingAsync(
+                                                  true
+                                              );
+                                          }
+
+                                          const newLoops = loops
+                                              .filter(loop => loop.id !== id)
+                                              .concat([
+                                                  {
+                                                      sound,
+                                                      playing: !playing,
+                                                      id,
+                                                  },
+                                              ]);
+                                          dispatch({
+                                              type: 'UPDATE_LOOPS',
+                                              payload: newLoops,
+                                          });
                                       }}
                                   />
                                   <CustomButton
                                       text={'Delete'}
                                       colorSet="secondary"
                                       onPress={async () => {
+                                          await sound.stopAsync();
                                           await sound.setIsLoopingAsync(false);
-                                          console.log('stop');
+                                          const newLoops = loops.filter(
+                                              loop => loop.id !== id
+                                          );
+                                          dispatch({
+                                              type: 'UPDATE_LOOPS',
+                                              payload: newLoops,
+                                          });
                                       }}
                                   />
                               </View>
