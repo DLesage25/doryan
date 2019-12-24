@@ -43,7 +43,10 @@ const LoopLengthControl = () => {
 
 const LooperButtons = () => {
     const dispatch = useDispatch();
-    const { loopLength, loops } = useSelector(({ looper }) => looper);
+    const {
+        loopLength: { value },
+        loops,
+    } = useSelector(({ looper }) => looper);
     return (
         <View style={styles.looperButtons}>
             {!loops.length ? null : (
@@ -60,7 +63,7 @@ const LooperButtons = () => {
                     text={'Rec/Dub'}
                     colorSet="primary"
                     onPress={async () => {
-                        dispatch(recordNewSound(loopLength));
+                        dispatch(recordNewSound(value));
                     }}
                 />
             </View>

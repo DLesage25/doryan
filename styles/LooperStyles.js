@@ -9,11 +9,11 @@ export default {
     },
     toolContainer: {
         backgroundColor: '#34495e',
-        marginTop: 0,
         height: 1000,
         alignItems: 'center',
-        marginBottom: 0,
         flexDirection: 'column',
+        alignContent: 'space-between',
+        //backgroundColor: '#fcfcfc', //remove
     },
     controlContainer: {
         alignItems: 'center',
@@ -57,7 +57,6 @@ export default {
         alignItems: 'center',
     },
     looperButtons: {
-        display: 'flex',
         flexDirection: 'column',
         height: '100%',
         alignItems: 'flex-end',
