@@ -1,28 +1,34 @@
 export default {
     container: {
         flex: 1,
-        paddingTop: 15,
         backgroundColor: '#f1c40f',
     },
     bodyContainer: {
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     controlContainer: {
         alignItems: 'center',
-        paddingTop: 20,
+        paddingTop: 10,
+        marginHorizontal: 10,
     },
     toolContainer: {
-        flex: 1,
         backgroundColor: '#34495e',
         marginTop: 0,
         height: 600,
-        padding: 10,
         alignItems: 'center',
+        marginBottom: 0,
+    },
+    feedbackControl: {
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
     },
     sliderContainer: {
         width: 300,
+    },
+    switch: {
+        marginTop: 10,
+        marginBottom: 10,
     },
     title: {
         fontSize: 30,
@@ -42,10 +48,9 @@ export default {
         marginTop: 5,
     },
     welcomeImage: {
-        width: 300,
-        height: 200,
+        width: 200,
+        height: 120,
         resizeMode: 'contain',
-        marginTop: 3,
         marginLeft: -10,
     },
     buttonText: {
@@ -58,7 +63,7 @@ export default {
         flexDirection: 'row',
     },
     MetronomeStep: {
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
     },
 };

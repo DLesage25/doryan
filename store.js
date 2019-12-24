@@ -8,7 +8,11 @@ import reducers from './reducers';
 
 // to prevent redux logger from logging
 // actions with deep nested objects
-const actionsToLogAsKeys = ['LOAD_METRONOME_ENGINE'];
+const actionsToLogAsKeys = [
+    'LOAD_METRONOME_ENGINE',
+    'RECORD_NEW_SOUND',
+    'UPDATE_LOOPS',
+];
 
 const logger = createLogger({
     duration: true,
@@ -22,7 +26,18 @@ const logger = createLogger({
                 ...state,
                 metronome: {
                     ...state.metronome,
-                    soundObjects: Object.keys(state.metronome.soundObjects),
+                    soundObjects:
+                        Object.keys(state.metronome.soundObjects) +
+                        ' [reduced - object]',
+                },
+            };
+        }
+        if (state.looper.loops) {
+            state = {
+                ...state,
+                looper: {
+                    ...state.looper,
+                    loops: state.looper.loops.length + ' [reduced - array]',
                 },
             };
         }

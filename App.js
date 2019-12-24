@@ -6,6 +6,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Provider } from 'react-redux';
+import checkForPermissions from './permissions';
 import configureStore from './store';
 
 const store = configureStore();
@@ -57,7 +58,8 @@ function handleLoadingError(error) {
     console.warn(error);
 }
 
-function handleFinishLoading(setLoadingComplete) {
+async function handleFinishLoading(setLoadingComplete) {
+    await checkForPermissions();
     setLoadingComplete(true);
 }
 

@@ -1,19 +1,24 @@
+import * as Haptics from 'expo-haptics';
+
 export const metronomeEngine = ({ tickFunc, completeFunc, soundObjects }) => {
     // derivative variables
     let tickCount = 0;
     let timerId;
     let toggleFunc;
 
-    const tick = ({ repeats, accent, setMetronomeStep }) => {
+    const tick = ({ repeats, accent, vibration, setMetronomeStep }) => {
         const metronomeStep = ((tickCount / 4) % 1) * 4;
         const isAccent = metronomeStep === accent.index;
 
-        //TODO add dynamic metronome sound depending on accent
+        //TODO add feature for exchanging metronome sounds
         const soundOn = soundObjects.metronomeOnNote;
         const soundOff = soundObjects.metronomeOffNote;
 
         if (isAccent) soundOn.replayAsync();
         else soundOff.replayAsync();
+
+        if (vibration)
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         if (tickFunc) tickFunc(tickCount);
         tickCount += 1;

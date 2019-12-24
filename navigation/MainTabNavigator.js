@@ -6,7 +6,7 @@ import {
 } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
+import LooperScreen from '../screens/LooperScreen';
 import MetronomeScreen from '../screens/MetronomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import IntroScreen from '../screens/IntroScreen';
@@ -54,29 +54,25 @@ IntroStack.navigationOptions = {
 
 IntroStack.path = '';
 
-const HomeStack = createStackNavigator(
+const LooperStack = createStackNavigator(
     {
-        Home: HomeScreen,
+        Looper: LooperScreen,
     },
     config
 );
 
-HomeStack.navigationOptions = {
-    title: 'Home',
-    tabBarLabel: 'Home',
+LooperStack.navigationOptions = {
+    title: 'Looper',
+    tabBarLabel: 'Looper',
     tabBarIcon: ({ focused }) => (
         <TabBarIcon
             focused={focused}
-            name={
-                Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
-            }
+            name={Platform.OS === 'ios' ? `ios-recording` : 'md-recording'}
         />
     ),
 };
 
-HomeStack.path = '';
+LooperStack.path = '';
 
 const MetronomeStack = createStackNavigator(
     {
@@ -91,7 +87,7 @@ MetronomeStack.navigationOptions = {
     tabBarIcon: ({ focused }) => (
         <TabBarIcon
             focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+            name={Platform.OS === 'ios' ? 'ios-stopwatch' : 'md-stopwatch'}
             tintColor={focused ? 'red' : 'blue'}
             s
         />
@@ -121,9 +117,9 @@ SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator(
     {
+        LooperStack,
         MetronomeStack,
         IntroStack,
-        //HomeStack,
         SettingsStack,
     },
     {
