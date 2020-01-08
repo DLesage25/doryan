@@ -10,6 +10,8 @@ import {
     Switch,
 } from 'react-native';
 
+import { useInterval } from '../hooks';
+
 import CustomButtonGroup from '../components/CustomButtonGroup';
 import CustomButton from '../components/CustomButton';
 import MetronomeStyles from '../styles/MetronomeStyles';
@@ -108,7 +110,7 @@ const MetronomeScreen = () => {
     const {
         accent,
         tempo,
-        play,
+        playing,
         vibration,
         engine,
         soundObjects,
@@ -123,18 +125,25 @@ const MetronomeScreen = () => {
     }, []);
 
     const metronomeOpts = {
-        tempo,
         accent,
         vibration,
+        setMetronomeStep,
+        timerId,
         repeats: 100,
         donef: () => {
             console.log('stopped metronome');
         },
-        setMetronomeStep,
-        togglePlay: () => {
-            dispatch({ type: 'TOGGLE_PLAY' });
-        },
     };
+
+    const interval = tempo ? 120000 / tempo / 2 : 1000;
+
+    let timerId = useInterval(
+        () => {
+            if (engine) engine.tick(metronomeOpts);
+        },
+        interval,
+        playing
+    );
 
     return (
         <ScrollView style={styles.container}>
@@ -159,10 +168,11 @@ const MetronomeScreen = () => {
                     }}
                 />
                 <CustomButton
-                    text={play ? 'Stop' : 'Start'}
+                    text={playing ? 'Stop' : 'Start'}
                     colorSet="primary"
                     onPress={() => {
-                        play ? engine.stop() : engine.start(metronomeOpts);
+                        dispatch({ type: 'TOGGLE_PLAY' });
+                        engine.stop();
                     }}
                 />
             </View>
@@ -173,7 +183,6 @@ const MetronomeScreen = () => {
 const styles = StyleSheet.create(MetronomeStyles);
 
 MetronomeScreen.navigationOptions = {
-    //header: null,
     title: 'Metronome',
 };
 
