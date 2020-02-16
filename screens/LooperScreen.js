@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     ScrollView,
@@ -10,14 +10,53 @@ import {
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomButtonGroup from '../components/CustomButtonGroup';
+import ProgressRing from '../components/ProgressRing';
 
 import { recordNewSound } from '../actions/looperActions';
 
 import LooperStyles from '../styles/LooperStyles';
 
+const ProgressDisplay = () => {
+    const {
+        loopLength: { value },
+        playing,
+        recording,
+    } = useSelector(({ looper }) => looper);
+
+    let [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        //I added -10 because of a weird delay between
+        //the progresscircle and actual loop being recorded
+        const progressInterval = value / 100 - 10;
+
+        console.log({ progressInterval });
+        if (playing || recording) {
+            const interval = setInterval(() => {
+                setProgress(progress++);
+                if (progress === 100) {
+                    if (recording) clearInterval(interval);
+                    setProgress(0);
+                }
+            }, progressInterval);
+        }
+    }, [playing, recording]);
+
+    return (
+        <View style={styles.controlContainer}>
+            <Text style={styles.subTitle}> Status </Text>
+
+            {playing || recording ? (
+                <ProgressRing radius={30} stroke={4} progress={progress} />
+            ) : (
+                <Text> Paused </Text>
+            )}
+        </View>
+    );
+};
+
 const LoopLengthControl = () => {
     const { loopLength } = useSelector(({ looper }) => looper);
-    // const options = ['5s', '10s', '15s'];
     const options = { '5s': 5000, '10s': 10000, '15s': 15000 };
     const dispatch = useDispatch();
 
@@ -46,15 +85,38 @@ const LooperButtons = () => {
     const {
         loopLength: { value },
         loops,
+        playing,
     } = useSelector(({ looper }) => looper);
     return (
         <View style={styles.looperButtons}>
             {!loops.length ? null : (
                 <CustomButton
-                    text={'Play All'}
+                    text={`${!playing ? 'Play' : 'Stop'} All`}
                     colorSet="primary"
                     onPress={() => {
-                        console.log('play all');
+                        loops.forEach(async ({ sound, playing }) => {
+                            if (playing) {
+                                await sound.stopAsync();
+                                await sound.setIsLoopingAsync(false);
+                            } else {
+                                await sound.replayAsync();
+                                await sound.setIsLoopingAsync(true);
+                            }
+                        });
+
+                        const newLoops = loops.map(loop => {
+                            return {
+                                ...loop,
+                                playing: !loop.playing,
+                            };
+                        });
+
+                        dispatch({ type: 'TOGGLE_PLAY' });
+
+                        dispatch({
+                            type: 'UPDATE_LOOPS',
+                            payload: newLoops,
+                        });
                     }}
                 />
             )}
@@ -75,7 +137,7 @@ const IndividualLoopControl = () => {
     const { loops } = useSelector(({ looper }) => looper);
     const dispatch = useDispatch();
     return (
-        <>
+        <View>
             {!loops.length
                 ? null
                 : loops.map(({ id, sound, playing }, index) => (
@@ -116,6 +178,8 @@ const IndividualLoopControl = () => {
                                               );
                                           }
 
+                                          dispatch({ type: 'TOGGLE_PLAY' });
+
                                           const newLoops = loops
                                               .filter(loop => loop.id !== id)
                                               .concat([
@@ -150,7 +214,7 @@ const IndividualLoopControl = () => {
                           </View>
                       </View>
                   ))}
-        </>
+        </View>
     );
 };
 
@@ -165,6 +229,7 @@ const LooperScreen = () => {
                 <Text style={styles.title}> Looper </Text>
             </View>
             <View style={styles.toolContainer}>
+                <ProgressDisplay />
                 <LoopLengthControl />
                 <IndividualLoopControl />
                 <LooperButtons />
@@ -176,3 +241,6 @@ const LooperScreen = () => {
 const styles = StyleSheet.create(LooperStyles);
 
 export default LooperScreen;
+
+//TODO - I need to work on this view so that the LooperButtons
+// are aligned to the end of the screen
