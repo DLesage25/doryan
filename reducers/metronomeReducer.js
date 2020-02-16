@@ -4,7 +4,7 @@ const INITIAL_STATE = {
         value: 'first',
     },
     tempo: 110,
-    play: false,
+    playing: false,
     engine: false,
     vibration: false,
 };
@@ -16,7 +16,7 @@ export default (state = INITIAL_STATE, action) => {
         case 'CHANGE_TEMPO':
             return { ...state, tempo: action.payload };
         case 'TOGGLE_PLAY':
-            return { ...state, play: !state.play };
+            return { ...state, playing: !state.playing };
         case 'TOGGLE_VIBRATION':
             return { ...state, vibration: !state.vibration };
         case 'LOAD_METRONOME_ENGINE':

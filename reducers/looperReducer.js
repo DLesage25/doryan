@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    play: false,
+    playing: false,
     loopLength: {
         index: 0,
         value: 5000,
@@ -11,11 +11,17 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'TOGGLE_PLAY':
-            return { ...state, play: !state.play };
+            return { ...state, playing: !state.playing };
+        case 'TOGGLE_RECORD':
+            return { ...state, recording: !state.recording };
         case 'CHANGE_LOOP_LENGTH':
             return { ...state, loopLength: action.payload };
-        case 'RECORD_NEW_SOUND':
-            return { ...state, loops: state.loops.concat([action.payload]) };
+        case 'RECORDED_NEW_SOUND':
+            return {
+                ...state,
+                loops: state.loops.concat([action.payload]),
+                recording: false,
+            };
         case 'UPDATE_LOOPS':
             return { ...state, loops: action.payload };
         default:

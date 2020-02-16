@@ -2,9 +2,10 @@ import { recordSoundWithTimeout } from '../engines/recording';
 
 export const recordNewSound = loopLength => {
     return async dispatch => {
+        dispatch({ type: 'TOGGLE_RECORD' });
         let newSound = await recordSoundWithTimeout(loopLength);
         dispatch({
-            type: 'RECORD_NEW_SOUND',
+            type: 'RECORDED_NEW_SOUND',
             payload: {
                 sound: newSound,
                 //TODO find a better way to ID these

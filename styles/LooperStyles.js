@@ -1,19 +1,16 @@
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#f1c40f',
+        backgroundColor: '#34495e',
     },
     headerContainer: {
         alignItems: 'center',
-        marginBottom: 10,
+        backgroundColor: '#f1c40f',
     },
     toolContainer: {
         backgroundColor: '#34495e',
-        height: 1000,
         alignItems: 'center',
         flexDirection: 'column',
-        alignContent: 'space-between',
-        //backgroundColor: '#fcfcfc', //remove
     },
     controlContainer: {
         alignItems: 'center',
@@ -59,7 +56,7 @@ export default {
     looperButtons: {
         flexDirection: 'column',
         height: '100%',
-        alignItems: 'flex-end',
+        // alignItems: 'flex-end',
         // alignSelf: 'flex-end',
     },
     mainButtonContainer: {
