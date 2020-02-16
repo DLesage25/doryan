@@ -10,7 +10,7 @@ import reducers from './reducers';
 // actions with deep nested objects
 const actionsToLogAsKeys = [
     'LOAD_METRONOME_ENGINE',
-    'RECORD_NEW_SOUND',
+    'RECORDED_NEW_SOUND',
     'UPDATE_LOOPS',
 ];
 
