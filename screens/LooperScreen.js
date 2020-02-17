@@ -30,7 +30,6 @@ const ProgressDisplay = () => {
         //the progresscircle and actual loop being recorded
         const progressInterval = value / 100 - 10;
 
-        console.log({ progressInterval });
         if (playing || recording) {
             const interval = setInterval(() => {
                 setProgress(progress++);

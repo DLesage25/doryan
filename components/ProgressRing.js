@@ -1,8 +1,7 @@
 import React from 'react';
-
 import { Svg, Circle } from 'react-native-svg';
-
 import { StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 const ProgressRing = ({ radius, stroke, progress }) => {
     const normalizedRadius = radius - stroke * 2;
@@ -25,6 +24,18 @@ const ProgressRing = ({ radius, stroke, progress }) => {
             </Svg>
         </View>
     );
+};
+
+ProgressRing.propTypes = {
+    radius: PropTypes.number,
+    stroke: PropTypes.number,
+    progress: PropTypes.number,
+};
+
+ProgressRing.defaultProps = {
+    radius: 10,
+    stroke: 10,
+    progress: 10,
 };
 
 const ProgressRingStyles = {
