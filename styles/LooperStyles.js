@@ -23,6 +23,9 @@ export default {
         resizeMode: 'contain',
         marginLeft: -10,
     },
+    statusContainer: {
+        height: 70,
+    },
     title: {
         fontSize: 30,
         fontFamily: 'Avenir',

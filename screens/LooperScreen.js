@@ -44,12 +44,23 @@ const ProgressDisplay = () => {
     return (
         <View style={styles.controlContainer}>
             <Text style={styles.subTitle}> Status </Text>
-
-            {playing || recording ? (
-                <ProgressRing radius={30} stroke={4} progress={progress} />
-            ) : (
-                <Text> Paused </Text>
-            )}
+            <View style={styles.statusContainer}>
+                {playing || recording ? (
+                    <ProgressRing
+                        radius={30}
+                        stroke={4}
+                        progress={progress}
+                        color={recording ? '#e74c3c' : '#e67e22'}
+                    />
+                ) : (
+                    <ProgressRing
+                        radius={30}
+                        stroke={4}
+                        progress={100}
+                        color="#2c3e50"
+                    />
+                )}
+            </View>
         </View>
     );
 };
