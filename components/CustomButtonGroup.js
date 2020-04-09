@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 15,
         fontFamily: 'Avenir-Medium',
-        color: '#fcfcfc',
+        color: '#b2bec3',
     },
 });

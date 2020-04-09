@@ -16,9 +16,9 @@ const config = Platform.select({
     default: {
         defaultNavigationOptions: {
             headerStyle: {
-                backgroundColor: '#2d3436',
+                backgroundColor: '#212728',
                 shadowColor: 'transparent',
-                borderBottomColor: '#2d3436',
+                borderBottomColor: '#212728',
             },
             // borderBottomColor: 'red',
             headerTintColor: '#fcfcfc',
@@ -117,7 +117,7 @@ const tabNavigator = createBottomTabNavigator(
         LooperStack,
         MetronomeStack,
         IntroStack,
-        SettingsStack,
+        // SettingsStack,
     },
     {
         tabBarOptions: {

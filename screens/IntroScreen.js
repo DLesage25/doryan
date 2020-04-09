@@ -22,9 +22,9 @@ export default function IntroScreen(props) {
                     onPress={() => navigate('Metronome')}
                 />
                 <CustomButton
-                    text="Chord Composer"
+                    text="Looper"
                     colorSet="secondary"
-                    onPress={() => navigate('Metronome')}
+                    onPress={() => navigate('Looper')}
                 />
                 <CustomButton
                     text="About"

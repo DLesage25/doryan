@@ -161,8 +161,8 @@ const IndividualLoopControl = () => {
                                           minimumValue="1"
                                           step={1}
                                           value={5}
-                                          minimumTrackTintColor="#f1c40f"
-                                          maximumTrackTintColor="#2c3e50"
+                                          minimumTrackTintColor="#ff7675"
+                                          maximumTrackTintColor="#636e72"
                                           onSlidingComplete={async newVolume => {
                                               await sound.setVolumeAsync(
                                                   newVolume / 10
