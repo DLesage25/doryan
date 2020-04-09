@@ -2,7 +2,7 @@
 
 <img src="https://github.com/DLesage25/doryan/blob/master/assets/images/logo2.png" width="150" alt="accessibility text">
 
-Doryan is a React Native utility mobile app for musicians. It is being developed in React Native using Expo.
+Doryan is a React-Native-based utility mobile app for musicians. Currently under development.
 
 ### Features
 
