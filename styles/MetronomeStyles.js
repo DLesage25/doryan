@@ -1,19 +1,20 @@
 export default {
     container: {
         flex: 1,
-        backgroundColor: '#f1c40f',
     },
     bodyContainer: {
+        backgroundColor: '#212728',
         alignItems: 'center',
-        marginBottom: 10,
+        // marginBottom: 10,
     },
     controlContainer: {
+        marginTop: 10,
         alignItems: 'center',
         paddingTop: 10,
         marginHorizontal: 10,
     },
     toolContainer: {
-        backgroundColor: '#34495e',
+        backgroundColor: '#212728',
         marginTop: 0,
         height: 600,
         alignItems: 'center',
@@ -38,12 +39,12 @@ export default {
     subTitle: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#f1c40f',
+        color: '#fcfcfc',
     },
     smallLabel: {
         fontSize: 16,
         fontFamily: 'Avenir-Medium',
-        color: '#e67e22',
+        color: '#636e72',
         alignSelf: 'center',
         marginTop: 5,
     },
@@ -51,7 +52,6 @@ export default {
         width: 200,
         height: 120,
         resizeMode: 'contain',
-        marginLeft: -10,
     },
     buttonText: {
         fontSize: 15,

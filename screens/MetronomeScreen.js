@@ -30,8 +30,8 @@ const TempoControl = ({ tempo }) => {
                     minimumValue="1"
                     step={1}
                     value={tempo}
-                    minimumTrackTintColor="#f1c40f"
-                    maximumTrackTintColor="#2c3e50"
+                    minimumTrackTintColor="#ff7675"
+                    maximumTrackTintColor="#636e72"
                     onSlidingComplete={newTempo => {
                         dispatch({ type: 'CHANGE_TEMPO', payload: newTempo });
                     }}
@@ -73,7 +73,7 @@ const VibrationControl = ({ vibration }) => {
             <Switch
                 style={styles.switch}
                 value={vibration}
-                trackColor={{ true: '#e67e22', false: 'grey' }}
+                trackColor={{ true: '#ff7675', false: 'grey' }}
                 onValueChange={() => {
                     dispatch({
                         type: 'TOGGLE_VIBRATION',

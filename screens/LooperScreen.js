@@ -50,14 +50,14 @@ const ProgressDisplay = () => {
                         radius={30}
                         stroke={4}
                         progress={progress}
-                        color={recording ? '#e74c3c' : '#e67e22'}
+                        color={recording ? '#e74c3c' : '#b2bec3'}
                     />
                 ) : (
                     <ProgressRing
                         radius={30}
                         stroke={4}
                         progress={100}
-                        color="#2c3e50"
+                        color="#2d3436"
                     />
                 )}
             </View>
@@ -102,7 +102,7 @@ const LooperButtons = () => {
             {!loops.length ? null : (
                 <CustomButton
                     text={`${!playing ? 'Play' : 'Stop'} All`}
-                    colorSet="primary"
+                    colorSet="secondary"
                     onPress={() => {
                         loops.forEach(async ({ sound, playing }) => {
                             if (playing) {
@@ -231,14 +231,11 @@ const IndividualLoopControl = () => {
 const LooperScreen = () => {
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.headerContainer}>
+            <View style={styles.toolContainer}>
                 <Image
                     source={require('../assets/images/looper.png')}
                     style={styles.welcomeImage}
                 />
-                <Text style={styles.title}> Looper </Text>
-            </View>
-            <View style={styles.toolContainer}>
                 <ProgressDisplay />
                 <LoopLengthControl />
                 <IndividualLoopControl />
@@ -250,7 +247,8 @@ const LooperScreen = () => {
 
 const styles = StyleSheet.create(LooperStyles);
 
-export default LooperScreen;
+LooperScreen.navigationOptions = {
+    title: 'Looper',
+};
 
-//TODO - I need to work on this view so that the LooperButtons
-// are aligned to the end of the screen
+export default LooperScreen;

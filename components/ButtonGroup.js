@@ -18,7 +18,7 @@ export default function CustomButtonGroup({ text, colorSet }) {
 const styles = StyleSheet.create({
     primaryButton: {
         alignItems: 'center',
-        backgroundColor: '#34495e',
+        backgroundColor: '#fcfcfc',
         padding: 10,
         marginHorizontal: 80,
         marginTop: 10,

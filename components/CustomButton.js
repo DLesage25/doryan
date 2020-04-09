@@ -36,7 +36,7 @@ const getStyles = colorSet => {
 const styles = StyleSheet.create({
     secondaryButton: {
         alignItems: 'center',
-        backgroundColor: '#2c3e50',
+        backgroundColor: '#2d3436',
         padding: 10,
         marginHorizontal: 10,
         marginVertical: 10,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     primaryButton: {
         alignItems: 'center',
-        backgroundColor: '#e74c3c',
+        backgroundColor: '#ff7675',
         padding: 10,
         marginHorizontal: 10,
         marginVertical: 10,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     primaryText: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#f1c40f',
+        color: '#fcfcfc',
     },
     secondaryText: {
         fontSize: 20,

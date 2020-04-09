@@ -16,16 +16,13 @@ const config = Platform.select({
     default: {
         defaultNavigationOptions: {
             headerStyle: {
-                backgroundColor: '#f1c40f',
+                backgroundColor: '#2d3436',
+                shadowColor: 'transparent',
+                borderBottomColor: '#2d3436',
             },
-            //headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-            tabBarOptions: {
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
-            },
+            // borderBottomColor: 'red',
+            headerTintColor: '#fcfcfc',
+            tabBarOptions: {},
         },
     },
 });
@@ -124,13 +121,16 @@ const tabNavigator = createBottomTabNavigator(
     },
     {
         tabBarOptions: {
-            activeTintColor: '#2c3e50',
-            inactiveTintColor: '#ecf0f1',
-            inactiveBackgroundColor: '#485460',
-            activeBackgroundColor: '#7f8c8d',
+            activeTintColor: '#ff7675',
+            inactiveTintColor: '#fcfcfc',
+            inactiveBackgroundColor: '#2d3436',
+            activeBackgroundColor: '#3a4345',
             style: {
-                backgroundColor: '#485460',
-                borderTopColor: '#605F60',
+                backgroundColor: '#2d3436',
+                borderTopColor: '#2d3436',
+            },
+            labelStyle: {
+                paddingBottom: 5,
             },
         },
     }

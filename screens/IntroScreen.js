@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
@@ -19,17 +18,17 @@ export default function IntroScreen(props) {
             <View style={styles.buttonContainer}>
                 <CustomButton
                     text="Smart Metronome"
-                    colorSet="secondaryLight"
+                    colorSet="secondary"
                     onPress={() => navigate('Metronome')}
                 />
                 <CustomButton
                     text="Chord Composer"
-                    colorSet="secondaryLight"
+                    colorSet="secondary"
                     onPress={() => navigate('Metronome')}
                 />
                 <CustomButton
                     text="About"
-                    colorSet="secondaryLight"
+                    colorSet="secondary"
                     onPress={() => navigate('About')}
                 />
             </View>
@@ -48,16 +47,16 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 50,
         fontFamily: 'Avenir',
-        color: '#34495e',
+        color: '#ff7675',
     },
     subTitle: {
         fontSize: 20,
         fontFamily: 'Avenir-Medium',
-        color: '#2c3e50',
+        color: '#fcfcfc',
     },
     container: {
         flex: 1,
-        backgroundColor: '#f1c40f',
+        backgroundColor: '#212728',
     },
     welcomeContainer: {
         alignItems: 'center',

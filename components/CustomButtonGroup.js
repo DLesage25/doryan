@@ -13,9 +13,9 @@ export default function CustomButtonGroup({ options, onPress, selectedIndex }) {
                 selectedIndex={selectedIndex}
                 buttons={buttons}
                 containerStyle={{ borderWidth: 0, width: 350 }}
-                textStyle={{ color: 'blue' }}
-                buttonStyle={{ backgroundColor: '#f1c40f' }}
-                selectedButtonStyle={{ backgroundColor: '#e67e22' }}
+                textStyle={{ color: '#fcfcfc' }}
+                buttonStyle={{ backgroundColor: '#212728' }}
+                selectedButtonStyle={{ backgroundColor: '#2d3436' }}
                 innerBorderStyle={{ color: '#34495e' }}
                 onPress={onPress}
             />
@@ -26,7 +26,6 @@ export default function CustomButtonGroup({ options, onPress, selectedIndex }) {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: '#34495e',
         marginHorizontal: 80,
         marginTop: 10,
         marginBottom: 10,
@@ -35,6 +34,6 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 15,
         fontFamily: 'Avenir-Medium',
-        color: '#34495e',
+        color: '#fcfcfc',
     },
 });
